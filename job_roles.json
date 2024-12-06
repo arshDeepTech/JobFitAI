@@ -1,42 +1,214 @@
 {
-    "data_scientist": {
-        "title": "Data Scientist",
-        "description": "Data analysis, machine learning, Python, R, SQL, statistics, deep learning, data visualization, scikit-learn, pandas, numpy, model deployment, A/B testing, hypothesis testing, experimental design, big data analytics, data mining, predictive modeling, NLP, computer vision, time series analysis, Bayesian methods"
+  "roles": [
+    {
+      "title": "Software Engineer",
+      "match_percentage": 85,
+      "required_skills": [
+        "Full Stack Development",
+        "System Design",
+        "CI/CD",
+        "Cloud Platforms",
+        "Data Structures"
+      ],
+      "experience_level": "3-5 years",
+      "salary_range": {"min": 100000, "max": 160000},
+      "industry": "Technology",
+      "growth_potential": "High",
+      "key_responsibilities": [
+        "Design and implement scalable applications",
+        "Code review and mentoring",
+        "Technical architecture",
+        "Performance optimization"
+      ]
     },
-    "software_engineer": {
-        "title": "Software Engineer",
-        "description": "Software development, Python, Java, C++, JavaScript, algorithms, data structures, web development, databases, API design, cloud computing, Git, agile, DevOps, microservices, system design, CI/CD, unit testing, debugging, performance optimization, scalability"
+    {
+      "title": "DevOps Engineer",
+      "match_percentage": 78,
+      "required_skills": [
+        "Docker",
+        "Kubernetes",
+        "AWS/Azure/GCP",
+        "Jenkins",
+        "Terraform"
+      ],
+      "experience_level": "3-5 years",
+      "salary_range": {"min": 110000, "max": 170000},
+      "industry": "Technology",
+      "growth_potential": "High",
+      "key_responsibilities": [
+        "Infrastructure automation",
+        "CI/CD pipeline management",
+        "Cloud architecture",
+        "Security implementation"
+      ]
     },
-    "data_engineer": {
-        "title": "Data Engineer",
-        "description": "Data pipelines, ETL, SQL, Python, big data, Apache Spark, Hadoop, data warehousing, data modeling, cloud platforms, data infrastructure, AWS, Azure, GCP, Airflow, Kafka, MongoDB, Redis, data governance, data quality, data security"
+    {
+      "title": "Data Scientist",
+      "match_percentage": 82,
+      "required_skills": [
+        "Python",
+        "Machine Learning",
+        "Statistical Analysis",
+        "Deep Learning",
+        "SQL"
+      ],
+      "experience_level": "2-4 years",
+      "salary_range": {"min": 95000, "max": 155000},
+      "industry": "Technology/Analytics",
+      "growth_potential": "High",
+      "key_responsibilities": [
+        "Build ML models",
+        "Data analysis",
+        "Research methodology",
+        "Business insights"
+      ]
     },
-    "ml_engineer": {
-        "title": "Machine Learning Engineer",
-        "description": "Machine learning, deep learning, Python, model deployment, MLOps, TensorFlow, PyTorch, model optimization, feature engineering, cloud platforms, distributed training, model serving, Docker, Kubernetes, model monitoring, ML pipelines, GPU optimization"
+    {
+      "title": "Product Manager",
+      "match_percentage": 75,
+      "required_skills": [
+        "Product Strategy",
+        "Agile/Scrum",
+        "User Research",
+        "Data Analysis",
+        "Stakeholder Management"
+      ],
+      "experience_level": "4-6 years",
+      "salary_range": {"min": 120000, "max": 180000},
+      "industry": "Technology",
+      "growth_potential": "Very High",
+      "key_responsibilities": [
+        "Product roadmap",
+        "Feature prioritization",
+        "Team leadership",
+        "Market analysis"
+      ]
     },
-    "frontend_developer": {
-        "title": "Frontend Developer",
-        "description": "HTML, CSS, JavaScript, React, Vue.js, Angular, responsive design, UI/UX, web accessibility, TypeScript, Redux, state management, webpack, npm, browser APIs, cross-browser compatibility, performance optimization, SEO"
+    {
+      "title": "UX/UI Designer",
+      "match_percentage": 72,
+      "required_skills": [
+        "Figma/Sketch",
+        "User Research",
+        "Wireframing",
+        "Prototyping",
+        "Design Systems"
+      ],
+      "experience_level": "2-4 years",
+      "salary_range": {"min": 85000, "max": 140000},
+      "industry": "Technology/Design",
+      "growth_potential": "High",
+      "key_responsibilities": [
+        "User interface design",
+        "User research",
+        "Design system maintenance",
+        "Usability testing"
+      ]
     },
-    "backend_developer": {
-        "title": "Backend Developer",
-        "description": "Server-side programming, APIs, databases, Node.js, Python, Java, Ruby, microservices, REST, GraphQL, SQL, NoSQL, caching, authentication, authorization, security, scalability, performance tuning"
+    {
+      "title": "Cloud Solutions Architect",
+      "match_percentage": 88,
+      "required_skills": [
+        "AWS/Azure/GCP",
+        "System Design",
+        "Security",
+        "Networking",
+        "Microservices"
+      ],
+      "experience_level": "5-8 years",
+      "salary_range": {"min": 130000, "max": 200000},
+      "industry": "Technology",
+      "growth_potential": "Very High",
+      "key_responsibilities": [
+        "Architecture design",
+        "Cloud strategy",
+        "Technical leadership",
+        "Cost optimization"
+      ]
     },
-    "devops_engineer": {
-        "title": "DevOps Engineer",
-        "description": "CI/CD, Docker, Kubernetes, cloud platforms, infrastructure as code, AWS, Azure, GCP, monitoring, logging, security, automation, Jenkins, GitLab, Terraform, Ansible, Linux, shell scripting, networking"
+    {
+      "title": "Data Engineer",
+      "match_percentage": 80,
+      "required_skills": [
+        "Python/Scala",
+        "SQL",
+        "ETL",
+        "Big Data",
+        "Data Warehousing"
+      ],
+      "experience_level": "3-5 years",
+      "salary_range": {"min": 100000, "max": 160000},
+      "industry": "Technology/Data",
+      "growth_potential": "High",
+      "key_responsibilities": [
+        "Data pipeline development",
+        "Database design",
+        "Data modeling",
+        "Performance tuning"
+      ]
     },
-    "cloud_architect": {
-        "title": "Cloud Architect",
-        "description": "Cloud architecture, AWS, Azure, GCP, infrastructure design, security, scalability, cost optimization, disaster recovery, high availability, networking, containerization, serverless, multi-cloud strategies"
+    {
+      "title": "Security Engineer",
+      "match_percentage": 76,
+      "required_skills": [
+        "Network Security",
+        "Penetration Testing",
+        "Security Tools",
+        "Incident Response",
+        "Compliance"
+      ],
+      "experience_level": "4-6 years",
+      "salary_range": {"min": 110000, "max": 170000},
+      "industry": "Technology/Security",
+      "growth_potential": "High",
+      "key_responsibilities": [
+        "Security assessment",
+        "Vulnerability management",
+        "Security architecture",
+        "Incident response"
+      ]
     },
-    "data_analyst": {
-        "title": "Data Analyst",
-        "description": "Data analysis, SQL, Excel, Python, R, data visualization, Tableau, Power BI, statistical analysis, reporting, dashboards, business intelligence, data cleaning, ETL, A/B testing, problem-solving"
+    {
+      "title": "Technical Project Manager",
+      "match_percentage": 70,
+      "required_skills": [
+        "Project Management",
+        "Agile",
+        "Risk Management",
+        "Technical Background",
+        "Stakeholder Management"
+      ],
+      "experience_level": "4-6 years",
+      "salary_range": {"min": 100000, "max": 160000},
+      "industry": "Technology",
+      "growth_potential": "High",
+      "key_responsibilities": [
+        "Project planning",
+        "Team leadership",
+        "Risk management",
+        "Stakeholder communication"
+      ]
     },
-    "full_stack_developer": {
-        "title": "Full Stack Developer",
-        "description": "Frontend development, backend development, databases, JavaScript, Python, React, Node.js, REST APIs, SQL, Git, responsive design, web security, deployment, debugging, full software lifecycle"
+    {
+      "title": "Machine Learning Engineer",
+      "match_percentage": 85,
+      "required_skills": [
+        "Python",
+        "Deep Learning",
+        "MLOps",
+        "Model Deployment",
+        "TensorFlow/PyTorch"
+      ],
+      "experience_level": "3-5 years",
+      "salary_range": {"min": 120000, "max": 180000},
+      "industry": "Technology/AI",
+      "growth_potential": "Very High",
+      "key_responsibilities": [
+        "ML model development",
+        "Model deployment",
+        "Performance optimization",
+        "Research implementation"
+      ]
     }
+  ]
 } 

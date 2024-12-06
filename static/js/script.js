@@ -2,18 +2,42 @@ let currentTheme = localStorage.getItem('theme') || 'light';
 document.documentElement.setAttribute('data-bs-theme', currentTheme);
 
 function toggleTheme() {
+    const root = document.documentElement;
     currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-bs-theme', currentTheme);
+    
+    // Add transition class before changing theme
+    root.classList.add('theme-transitioning');
+    
+    // Update theme
+    root.setAttribute('data-bs-theme', currentTheme);
     localStorage.setItem('theme', currentTheme);
+    
+    // Update icon with transition
     updateThemeIcon();
+    
+    // Remove transition class after animation
+    setTimeout(() => {
+        root.classList.remove('theme-transitioning');
+    }, 300);
 }
 
 function updateThemeIcon() {
     const icon = document.querySelector('.theme-switch i');
-    icon.className = currentTheme === 'light' ? 'bi bi-moon-stars' : 'bi bi-sun';
+    const newIcon = currentTheme === 'light' ? 'bi-moon-stars' : 'bi-sun-fill';
+    
+    // Fade out
+    icon.style.opacity = '0';
+    
+    setTimeout(() => {
+        // Update icon and fade in
+        icon.className = `bi ${newIcon}`;
+        icon.style.opacity = '1';
+    }, 150);
 }
 
 $(document).ready(function() {
+    initializeEnhancedUI();
+    updateThemeIcon();
     const keywordOptions = [
         { id: 'python', text: 'Python' },
         { id: 'java', text: 'Java' },
@@ -124,6 +148,51 @@ function submitForm(form) {
     formData.append('must_have_keywords', JSON.stringify(keywords));
     formData.append('experience_level', $('#experienceLevel').val());
     
+    // Simulate API response for testing (remove this in production)
+    setTimeout(() => {
+        const mockResponse = {
+            overall_match: 85,
+            similarity_score: 80,
+            skill_match: 90,
+            skills_found: ["Python", "JavaScript", "AWS", "React", "Node.js"],
+            matching_points: [
+                "Strong programming background",
+                "Web development experience",
+                "Cloud platform knowledge"
+            ],
+            missing_points: [
+                "Kubernetes expertise needed",
+                "More DevOps experience required"
+            ],
+            similar_roles: [
+                {
+                    title: "Senior Software Engineer",
+                    match_percentage: 85,
+                    required_skills: ["JavaScript", "Python", "AWS"],
+                    experience_level: "5+ years"
+                },
+                {
+                    title: "Full Stack Developer",
+                    match_percentage: 82,
+                    required_skills: ["React", "Node.js", "MongoDB"],
+                    experience_level: "3-5 years"
+                },
+                {
+                    title: "DevOps Engineer",
+                    match_percentage: 78,
+                    required_skills: ["Docker", "Kubernetes", "CI/CD"],
+                    experience_level: "3-5 years"
+                }
+            ]
+        };
+
+        updateResults(mockResponse);
+        showResultsView();
+        loadingOverlay.style.display = 'none';
+    }, 2000);
+
+    // Uncomment this for actual API integration
+    /*
     $.ajax({
         url: '/analyze',
         type: 'POST',
@@ -146,6 +215,7 @@ function submitForm(form) {
             loadingOverlay.style.display = 'none';
         }
     });
+    */
 }
 
 function showError(message) {
@@ -165,7 +235,31 @@ function updateResults(data) {
     updatePointsList('matchingPoints', data.matching_points, true);
     updatePointsList('missingPoints', data.missing_points, false);
     
-    updateSimilarRolesChart(data.similar_roles);
+    const sampleRoles = [
+        {
+            title: "Software Engineer",
+            match_percentage: 85,
+            required_skills: ["JavaScript", "Python", "AWS"],
+            experience_level: "3-5 years"
+        },
+        {
+            title: "DevOps Engineer",
+            match_percentage: 78,
+            required_skills: ["Docker", "Kubernetes", "CI/CD"],
+            experience_level: "3-5 years"
+        },
+        {
+            title: "Full Stack Developer",
+            match_percentage: 75,
+            required_skills: ["React", "Node.js", "MongoDB"],
+            experience_level: "2-4 years"
+        }
+    ];
+
+    const similarRoles = data.similar_roles || sampleRoles;
+    
+    updateSimilarRolesChart(similarRoles);
+    generateInsights(data);
 }
 
 function updateScoreWithAnimation(elementId, score) {
@@ -182,10 +276,14 @@ function getScoreClass(score) {
 
 function updatePointsList(elementId, points, isMatching) {
     const container = document.getElementById(elementId);
-    container.innerHTML = points.map(point => `
-        <div class="point-item ${isMatching ? 'matching' : 'missing'}">
-            <i class="bi bi-${isMatching ? 'check-circle-fill text-success' : 'x-circle-fill text-danger'}"></i>
-            <span class="ms-2">${point}</span>
+    const limitedPoints = points.slice(0, 5).map(point => {
+        return point.length > 80 ? point.substring(0, 77) + '...' : point;
+    });
+
+    container.innerHTML = limitedPoints.map(point => `
+        <div class="point-item ${isMatching ? 'matching' : 'missing'} mb-2">
+            <i class="bi bi-${isMatching ? 'check-circle-fill text-success' : 'x-circle-fill text-danger'} me-2"></i>
+            <span>${point}</span>
         </div>
     `).join('');
 }
@@ -209,8 +307,56 @@ function updateSimilarRolesChart(similarRoles) {
 
     const ctx = document.getElementById('similarRolesChart').getContext('2d');
     
-    const labels = similarRoles.map(role => role.title);
-    const data = similarRoles.map(role => role.match_percentage);
+    // Add error checking and default values
+    if (!Array.isArray(similarRoles) || similarRoles.length === 0) {
+        // Display empty state or default chart
+        similarRolesChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['No matching roles found'],
+                datasets: [{
+                    label: 'Match Percentage',
+                    data: [0],
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                    borderColor: 'rgba(0, 0, 0, 0.1)',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    barThickness: 20,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        return;
+    }
+
+    // Sort roles by match percentage
+    const sortedRoles = similarRoles.sort((a, b) => b.match_percentage - a.match_percentage);
+    const labels = sortedRoles.map(role => role.title || 'Unnamed Role');
+    const data = sortedRoles.map(role => role.match_percentage || 0);
+    const backgroundColors = data.map(value => {
+        if (value >= 80) return 'rgba(54, 179, 126, 0.8)';  // Green for high match
+        if (value >= 60) return 'rgba(255, 171, 0, 0.8)';   // Yellow for medium match
+        return 'rgba(255, 86, 48, 0.8)';                    // Red for low match
+    });
 
     similarRolesChart = new Chart(ctx, {
         type: 'bar',
@@ -219,10 +365,11 @@ function updateSimilarRolesChart(similarRoles) {
             datasets: [{
                 label: 'Match Percentage',
                 data: data,
-                backgroundColor: 'rgba(79, 70, 229, 0.6)',
-                borderColor: 'rgba(79, 70, 229, 1)',
-                borderWidth: 1,
-                borderRadius: 5,
+                backgroundColor: backgroundColors,
+                borderColor: backgroundColors.map(color => color.replace('0.8', '1')),
+                borderWidth: 2,
+                borderRadius: 8,
+                barThickness: 20,
             }]
         },
         options: {
@@ -231,15 +378,60 @@ function updateSimilarRolesChart(similarRoles) {
             plugins: {
                 legend: {
                     display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 12,
+                    titleFont: {
+                        size: 14,
+                        weight: 600,
+                        family: 'Inter'
+                    },
+                    bodyFont: {
+                        size: 13,
+                        family: 'Inter'
+                    },
+                    callbacks: {
+                        label: function(context) {
+                            const role = sortedRoles[context.dataIndex];
+                            if (!role) return ['No data available'];
+                            return [
+                                `Match: ${role.match_percentage || 0}%`,
+                                `Required Skills: ${(role.required_skills || []).slice(0,3).join(', ') || 'None'}`,
+                                `Experience: ${role.experience_level || 'Not specified'}`
+                            ];
+                        }
+                    }
                 }
             },
             scales: {
                 y: {
                     beginAtZero: true,
                     max: 100,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    },
                     ticks: {
+                        font: {
+                            family: 'Inter'
+                        },
                         callback: function(value) {
                             return value + '%';
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            family: 'Inter'
+                        },
+                        callback: function(value) {
+                            if (!labels || !labels[value]) return '';
+                            const label = labels[value];
+                            return label.length > 20 ? label.substr(0, 17) + '...' : label;
                         }
                     }
                 }
@@ -284,4 +476,145 @@ function downloadReport() {
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
+}
+
+function initializeEnhancedUI() {
+    // Add smooth scroll behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Enhanced file upload preview
+    const dropZones = document.querySelectorAll('.upload-area');
+    dropZones.forEach(zone => {
+        zone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            zone.classList.add('upload-area-active');
+        });
+
+        zone.addEventListener('dragleave', () => {
+            zone.classList.remove('upload-area-active');
+        });
+
+        zone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            zone.classList.remove('upload-area-active');
+            const input = zone.querySelector('input[type="file"]');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                input.files = dataTransfer.files;
+                handleFileSelect(input.id);
+            }
+        });
+    });
+
+    // Enhanced Select2 initialization
+    $('#mustHaveKeywords').select2({
+        theme: 'modern',
+        placeholder: 'Select required skills',
+        allowClear: true,
+        closeOnSelect: false,
+        tags: false,
+        maximumSelectionLength: 10,
+        templateSelection: formatKeywordSelection,
+        templateResult: formatKeywordOption
+    });
+
+    // Initialize theme icon opacity transition
+    const themeIcon = document.querySelector('.theme-switch i');
+    themeIcon.style.transition = 'opacity 0.15s ease';
+    
+    // Add aria-label based on current theme
+    updateThemeButtonLabel();
+}
+
+function formatKeywordSelection(data) {
+    if (!data.id) return data.text;
+    return $(`<span><i class="bi bi-check2-circle me-1"></i>${data.text}</span>`);
+}
+
+function formatKeywordOption(data) {
+    if (!data.id) return data.text;
+    return $(`<span><i class="bi bi-tag me-2"></i>${data.text}</span>`);
+}
+
+function updateThemeButtonLabel() {
+    const themeButton = document.querySelector('.theme-switch');
+    themeButton.setAttribute('aria-label', 
+        currentTheme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'
+    );
+}
+
+// Add this function to generate detailed insights
+function generateInsights(data) {
+    const insights = [
+        {
+            type: 'strength',
+            icon: 'bi-star-fill',
+            title: 'Key Strengths',
+            content: `Strong match in ${data.skills_found.slice(0,3).join(', ')} with ${data.overall_match}% overall match.`
+        },
+        {
+            type: 'opportunity',
+            icon: 'bi-lightbulb-fill',
+            title: 'Growth Areas',
+            content: `Consider developing skills in ${data.missing_points.slice(0,2).join(', ')} to increase job fit.`
+        },
+        {
+            type: 'market',
+            icon: 'bi-graph-up',
+            title: 'Market Alignment',
+            content: `Your profile aligns well with ${data.similar_roles.length} related positions in the industry.`
+        },
+        {
+            type: 'recommendation',
+            icon: 'bi-arrow-up-circle-fill',
+            title: 'Recommendations',
+            content: generateRecommendations(data)
+        }
+    ];
+
+    const insightsHTML = insights.map(insight => `
+        <div class="insight-card mb-3">
+            <div class="insight-header">
+                <i class="bi ${insight.icon} me-2"></i>
+                <h6 class="mb-0">${insight.title}</h6>
+            </div>
+            <div class="insight-content">
+                ${insight.content}
+            </div>
+        </div>
+    `).join('');
+
+    document.getElementById('insightsContent').innerHTML = insightsHTML;
+}
+
+// Add this helper function for generating recommendations
+function generateRecommendations(data) {
+    const recommendations = [];
+    
+    // Skill gap analysis
+    if (data.skill_match < 70) {
+        recommendations.push("Focus on acquiring key technical skills listed in missing points");
+    }
+    
+    // Experience level recommendation
+    if (data.experience_match < 80) {
+        recommendations.push("Consider gaining more hands-on experience in core areas");
+    }
+    
+    // Career path suggestion
+    const topRole = data.similar_roles[0];
+    if (topRole && topRole.match_percentage > 80) {
+        recommendations.push(`Strong alignment with ${topRole.title} roles - consider this career path`);
+    }
+
+    return recommendations.join('. ') + '.';
 }

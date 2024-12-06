@@ -3,127 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ResumeAI | Smart Resume Matcher</title>
+    <title>ResumeAI Enterprise | Intelligent Resume Analysis Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         :root {
-            --primary-color: #4f46e5;
-            --secondary-color: #818cf8;
-            --success-color: #22c55e;
-            --danger-color: #ef4444;
-            --warning-color: #f59e0b;
-            --info-color: #3b82f6;
+            --primary-color: #0052CC;
+            --secondary-color: #0747A6;
+            --success-color: #36B37E;
+            --danger-color: #FF5630;
+            --warning-color: #FFAB00;
+            --info-color: #00B8D9;
+            --neutral-100: #F4F5F7;
+            --neutral-200: #DFE1E6;
+            --neutral-300: #C1C7D0;
+            --neutral-400: #A5ADBA;
+            --neutral-500: #42526E;
+            --neutral-600: #344563;
+            --neutral-700: #253858;
+            --neutral-800: #172B4D;
         }
 
         [data-bs-theme="dark"] {
-            --primary-color: #6366f1;
-            --secondary-color: #a5b4fc;
-            --bg-color: #1f2937;
-            --card-bg: #374151;
-            --text-color: #f3f4f6;
+            --primary-color: #4C9AFF;
+            --secondary-color: #2684FF;
+            --bg-color: #1B2638;
+            --card-bg: #243757;
+            --text-color: #F4F5F7;
+            --input-bg: #2C3E50;
+            --border-color: #3D4B5C;
+            --muted-text: #A0AEC0;
         }
 
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #f6f7ff 0%, #ffffff 100%);
+            background: linear-gradient(135deg, var(--neutral-100) 0%, #FFFFFF 100%);
             transition: all 0.3s ease;
+            color: var(--neutral-800);
+            line-height: 1.6;
         }
 
         [data-bs-theme="dark"] body {
-            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            background: linear-gradient(135deg, var(--bg-color) 0%, #0F1724 100%);
             color: var(--text-color);
         }
 
         .navbar {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.8) !important;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-bottom: 1px solid var(--neutral-200);
         }
 
-        [data-bs-theme="dark"] .navbar {
-            background: rgba(31, 41, 55, 0.8) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
-        }
-
-        [data-bs-theme="dark"] .card {
-            background: rgba(55, 65, 81, 0.9);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .upload-area {
-            border: 2px dashed var(--primary-color);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
+            border: 1px solid var(--neutral-200);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             transition: all 0.3s ease;
         }
 
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--neutral-300);
+            border-radius: 12px;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--neutral-100);
+        }
+
         .upload-area:hover {
-            background: rgba(79, 70, 229, 0.1);
+            border-color: var(--primary-color);
+            background: rgba(0, 82, 204, 0.05);
         }
 
         .stat-card {
-            padding: 1.5rem;
-            border-radius: 15px;
-            color: white;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            pointer-events: none;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 82, 204, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 82, 204, 0.3);
+        }
+
+        .select2-container--default .select2-selection--multiple {
+            border: 1px solid var(--neutral-300);
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 6px;
+            padding: 0.25rem 0.75rem;
+            color: white;
+            font-size: 0.875rem;
         }
 
         .progress {
-            height: 10px;
-            border-radius: 5px;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--neutral-200);
         }
 
-        .skill-badge {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            margin: 0.25rem;
-            font-size: 0.9rem;
-            background: rgba(79, 70, 229, 0.1);
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
-        }
-
-        [data-bs-theme="dark"] .skill-badge {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--secondary-color);
-            border: 1px solid var(--secondary-color);
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
 
         .nav-tabs {
             border: none;
-            margin-bottom: 1rem;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
         }
 
         .nav-tabs .nav-link {
-            border: none;
-            color: var(--primary-color);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            margin-right: 0.5rem;
-            transition: all 0.3s ease;
+            border: 1px solid var(--neutral-200);
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            color: var(--neutral-600);
+            background: white;
         }
 
         .nav-tabs .nav-link.active {
             background: var(--primary-color);
             color: white;
+            border-color: var(--primary-color);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--neutral-200);
+            border-top: 4px solid var(--primary-color);
         }
 
         .chart-container {
@@ -134,49 +210,37 @@
 
         .theme-switch {
             cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            padding: 0.75rem;
+            border-radius: 12px;
+            width: 42px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            background: var(--neutral-100);
+            border: 1px solid var(--neutral-200);
+            color: var(--neutral-600);
         }
 
         .theme-switch:hover {
-            background: rgba(0, 0, 0, 0.1);
+            background: var(--neutral-200);
+            transform: translateY(-1px);
+        }
+
+        [data-bs-theme="dark"] .theme-switch {
+            background: var(--bg-color);
+            border-color: var(--neutral-700);
+            color: var(--text-color);
         }
 
         [data-bs-theme="dark"] .theme-switch:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--neutral-700);
         }
 
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .theme-switch i {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
         }
 
         .selected-file {
@@ -250,6 +314,406 @@
             opacity: 0;
             cursor: pointer;
         }
+
+        /* Add transition for smooth theme switching */
+        * {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+        }
+
+        /* Update dark theme variables */
+        [data-bs-theme="dark"] {
+            --primary-color: #4C9AFF;
+            --secondary-color: #2684FF;
+            --bg-color: #1B2638;
+            --card-bg: #243757;
+            --text-color: #F4F5F7;
+            --input-bg: #2C3E50;
+            --border-color: #3D4B5C;
+            --muted-text: #A0AEC0;
+        }
+
+        /* Update card styles for dark mode */
+        [data-bs-theme="dark"] .card {
+            background: var(--card-bg);
+            border-color: var(--border-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Update upload area styles for dark mode */
+        [data-bs-theme="dark"] .upload-area {
+            background: var(--input-bg);
+            border-color: var(--border-color);
+        }
+
+        [data-bs-theme="dark"] .upload-area:hover {
+            border-color: var(--primary-color);
+            background: rgba(76, 154, 255, 0.1);
+        }
+
+        /* Update form control styles for dark mode */
+        [data-bs-theme="dark"] .form-control {
+            background-color: var(--input-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+
+        [data-bs-theme="dark"] .form-control:focus {
+            background-color: var(--input-bg);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        /* Update text colors for dark mode */
+        [data-bs-theme="dark"] .text-muted {
+            color: var(--muted-text) !important;
+        }
+
+        [data-bs-theme="dark"] .form-label {
+            color: var(--text-color);
+        }
+
+        /* Update Select2 styles for dark mode */
+        [data-bs-theme="dark"] .select2-container--default .select2-selection--multiple {
+            background-color: var(--input-bg);
+            border-color: var(--border-color);
+        }
+
+        [data-bs-theme="dark"] .select2-container--default .select2-search--inline .select2-search__field {
+            color: var(--text-color);
+        }
+
+        [data-bs-theme="dark"] .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        [data-bs-theme="dark"] .select2-dropdown {
+            background-color: var(--input-bg);
+            border-color: var(--border-color);
+        }
+
+        [data-bs-theme="dark"] .select2-container--default .select2-results__option {
+            color: var(--text-color);
+        }
+
+        [data-bs-theme="dark"] .select2-container--default .select2-results__option[aria-selected=true] {
+            background-color: var(--primary-color);
+        }
+
+        [data-bs-theme="dark"] .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: var(--secondary-color);
+        }
+
+        /* Update navbar styles for dark mode */
+        [data-bs-theme="dark"] .navbar {
+            background: rgba(27, 38, 56, 0.95) !important;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Update loading overlay for dark mode */
+        [data-bs-theme="dark"] .loading-overlay {
+            background: rgba(27, 38, 56, 0.9);
+        }
+
+        [data-bs-theme="dark"] .loading-spinner {
+            border-color: var(--border-color);
+            border-top-color: var(--primary-color);
+        }
+
+        /* Update file info styles for dark mode */
+        [data-bs-theme="dark"] .selected-file {
+            background: rgba(76, 154, 255, 0.1);
+        }
+
+        /* Update nav tabs for dark mode */
+        [data-bs-theme="dark"] .nav-tabs .nav-link {
+            background: var(--card-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+
+        [data-bs-theme="dark"] .nav-tabs .nav-link:hover {
+            border-color: var(--primary-color);
+            background: var(--input-bg);
+        }
+
+        [data-bs-theme="dark"] .nav-tabs .nav-link.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Update buttons for dark mode */
+        [data-bs-theme="dark"] .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        [data-bs-theme="dark"] .btn-outline-primary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Add styles for the main container */
+        .main-container {
+            padding-top: 2rem;
+            padding-bottom: 4rem;
+            min-height: calc(100vh - 76px); /* Account for navbar height */
+            display: flex;
+            align-items: flex-start; /* Changed from center to flex-start */
+        }
+
+        /* Update upload view styles */
+        .upload-view-container {
+            width: 100%;
+            margin-top: 2rem; /* Add specific top margin */
+        }
+
+        /* Update card styles for first screen */
+        .upload-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        [data-bs-theme="dark"] .upload-card {
+            background: var(--card-bg);
+        }
+
+        /* Update navbar height and positioning */
+        .navbar {
+            height: 76px; /* Fixed height for navbar */
+            padding: 1rem 0;
+        }
+
+        /* Dashboard Improvements */
+        .dashboard-container {
+            padding: 1.5rem;
+            background: var(--neutral-100);
+            border-radius: 16px;
+            margin-top: 1rem;
+        }
+
+        [data-bs-theme="dark"] .dashboard-container {
+            background: var(--bg-color);
+        }
+
+        /* Enhanced Stats Cards */
+        .stats-row {
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            height: 100%;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .stat-card p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* Enhanced Chart Card */
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        [data-bs-theme="dark"] .chart-card {
+            background: var(--card-bg);
+        }
+
+        .chart-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .chart-card .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--neutral-800);
+        }
+
+        [data-bs-theme="dark"] .chart-card .card-title {
+            color: var(--text-color);
+        }
+
+        /* Enhanced Tabs */
+        .dashboard-tabs {
+            border: none;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: inline-flex;
+            gap: 0.5rem;
+        }
+
+        [data-bs-theme="dark"] .dashboard-tabs {
+            background: var(--card-bg);
+        }
+
+        .dashboard-tabs .nav-link {
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            border-radius: 8px;
+            color: var(--neutral-600);
+            border: none;
+        }
+
+        .dashboard-tabs .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Analysis Cards */
+        .analysis-card {
+            height: 100%;
+            min-height: 300px;
+        }
+
+        .analysis-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .analysis-card .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Skills and Keywords Display */
+        .skill-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 82, 204, 0.1);
+            color: var(--primary-color);
+            border-radius: 20px;
+            margin: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        [data-bs-theme="dark"] .skill-badge {
+            background: rgba(76, 154, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        /* Point Items Styling */
+        .point-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            background: var(--neutral-100);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        [data-bs-theme="dark"] .point-item {
+            background: var(--input-bg);
+        }
+
+        .point-item span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .point-item i {
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        /* Stats Card Text */
+        .stat-card p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin: 0;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+        }
+
+        /* Update the requirements cards */
+        .requirements-card {
+            height: 100%;
+        }
+
+        .requirements-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .requirements-card .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Insight Cards */
+        .insight-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid var(--neutral-200);
+            transition: all 0.3s ease;
+        }
+
+        [data-bs-theme="dark"] .insight-card {
+            background: var(--card-bg);
+            border-color: var(--border-color);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .insight-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            color: var(--primary-color);
+        }
+
+        .insight-header i {
+            font-size: 1.25rem;
+        }
+
+        .insight-content {
+            color: var(--neutral-600);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        [data-bs-theme="dark"] .insight-content {
+            color: var(--text-color);
+        }
     </style>
 </head>
 <body>
@@ -266,20 +730,20 @@
                 <span class="fw-bold">ResumeAI</span>
             </a>
             <div class="d-flex align-items-center">
-                <div class="theme-switch me-2" onclick="toggleTheme()">
+                <button class="theme-switch me-2" onclick="toggleTheme()" aria-label="Toggle theme">
                     <i class="bi bi-moon-stars"></i>
-                </div>
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="container py-5">
+    <div class="container-fluid main-container">
         <!-- Upload View -->
-        <div id="uploadView">
+        <div id="uploadView" class="upload-view-container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <div class="card">
+                    <div class="card upload-card">
                         <div class="card-body p-4">
                             <h4 class="mb-4 text-center">Smart Resume Analysis</h4>
                             <form id="uploadForm">
@@ -334,20 +798,28 @@
         </div>
 
         <!-- Results Dashboard -->
-        <div id="resultsView" style="display: none;">
+        <div id="resultsView" style="display: none;" class="dashboard-container">
             <!-- Dashboard Navigation -->
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs dashboard-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#overview">Overview</a>
+                    <a class="nav-link active" data-bs-toggle="tab" href="#overview">
+                        <i class="bi bi-grid me-2"></i>Overview
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#skills">Skills Analysis</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#skills">
+                        <i class="bi bi-lightning me-2"></i>Skills Analysis
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#requirements">Requirements</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#requirements">
+                        <i class="bi bi-check2-square me-2"></i>Requirements
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#insights">Insights</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#insights">
+                        <i class="bi bi-lightbulb me-2"></i>Insights
+                    </a>
                 </li>
             </ul>
 
@@ -355,33 +827,34 @@
             <div class="tab-content">
                 <!-- Overview Tab -->
                 <div class="tab-pane fade show active" id="overview">
-                    <div class="row">
+                    <div class="row stats-row">
                         <div class="col-md-4 mb-4">
-                            <div class="card stat-card">
-                                <h3 class="mb-0" id="overallScore">--%</h3>
-                                <p class="mb-0">Overall Match</p>
+                            <div class="stat-card">
+                                <h3 id="overallScore">--%</h3>
+                                <p><i class="bi bi-pie-chart me-2"></i>Overall Match</p>
                             </div>
                         </div>
                         <div class="col-md-4 mb-4">
-                            <div class="card stat-card">
-                                <h3 class="mb-0" id="similarityScore">--%</h3>
-                                <p class="mb-0">Content Match</p>
+                            <div class="stat-card">
+                                <h3 id="similarityScore">--%</h3>
+                                <p><i class="bi bi-intersect me-2"></i>Content Match</p>
                             </div>
                         </div>
                         <div class="col-md-4 mb-4">
-                            <div class="card stat-card">
-                                <h3 class="mb-0" id="skillScore">--%</h3>
-                                <p class="mb-0">Skill Match</p>
+                            <div class="stat-card">
+                                <h3 id="skillScore">--%</h3>
+                                <p><i class="bi bi-stars me-2"></i>Skill Match</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Similar Roles Chart -->
                     <div class="row">
-                        <div class="col-12 mb-4">
-                            <div class="card">
+                        <div class="col-12">
+                            <div class="chart-card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Similar Role Matches</h5>
+                                    <h5 class="card-title">
+                                        <i class="bi bi-graph-up me-2"></i>Similar Role Matches
+                                    </h5>
                                     <div class="chart-container">
                                         <canvas id="similarRolesChart"></canvas>
                                     </div>
@@ -417,20 +890,20 @@
                 <div class="tab-pane fade" id="requirements">
                     <div class="row">
                         <div class="col-md-6 mb-4">
-                            <div class="card h-100">
+                            <div class="card requirements-card">
                                 <div class="card-body">
                                     <h5 class="card-title text-success">
-                                        <i class="bi bi-check-circle me-2"></i>Matching Points
+                                        <i class="bi bi-check-circle me-2"></i>Key Matches
                                     </h5>
                                     <div id="matchingPoints" class="mt-3"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 mb-4">
-                            <div class="card h-100">
+                            <div class="card requirements-card">
                                 <div class="card-body">
                                     <h5 class="card-title text-danger">
-                                        <i class="bi bi-x-circle me-2"></i>Missing Points
+                                        <i class="bi bi-x-circle me-2"></i>Areas to Improve
                                     </h5>
                                     <div id="missingPoints" class="mt-3"></div>
                                 </div>
