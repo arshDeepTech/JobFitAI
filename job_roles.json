@@ -1,0 +1,42 @@
+{
+    "data_scientist": {
+        "title": "Data Scientist",
+        "description": "Data analysis, machine learning, Python, R, SQL, statistics, deep learning, data visualization, scikit-learn, pandas, numpy, model deployment, A/B testing, hypothesis testing, experimental design, big data analytics, data mining, predictive modeling, NLP, computer vision, time series analysis, Bayesian methods"
+    },
+    "software_engineer": {
+        "title": "Software Engineer",
+        "description": "Software development, Python, Java, C++, JavaScript, algorithms, data structures, web development, databases, API design, cloud computing, Git, agile, DevOps, microservices, system design, CI/CD, unit testing, debugging, performance optimization, scalability"
+    },
+    "data_engineer": {
+        "title": "Data Engineer",
+        "description": "Data pipelines, ETL, SQL, Python, big data, Apache Spark, Hadoop, data warehousing, data modeling, cloud platforms, data infrastructure, AWS, Azure, GCP, Airflow, Kafka, MongoDB, Redis, data governance, data quality, data security"
+    },
+    "ml_engineer": {
+        "title": "Machine Learning Engineer",
+        "description": "Machine learning, deep learning, Python, model deployment, MLOps, TensorFlow, PyTorch, model optimization, feature engineering, cloud platforms, distributed training, model serving, Docker, Kubernetes, model monitoring, ML pipelines, GPU optimization"
+    },
+    "frontend_developer": {
+        "title": "Frontend Developer",
+        "description": "HTML, CSS, JavaScript, React, Vue.js, Angular, responsive design, UI/UX, web accessibility, TypeScript, Redux, state management, webpack, npm, browser APIs, cross-browser compatibility, performance optimization, SEO"
+    },
+    "backend_developer": {
+        "title": "Backend Developer",
+        "description": "Server-side programming, APIs, databases, Node.js, Python, Java, Ruby, microservices, REST, GraphQL, SQL, NoSQL, caching, authentication, authorization, security, scalability, performance tuning"
+    },
+    "devops_engineer": {
+        "title": "DevOps Engineer",
+        "description": "CI/CD, Docker, Kubernetes, cloud platforms, infrastructure as code, AWS, Azure, GCP, monitoring, logging, security, automation, Jenkins, GitLab, Terraform, Ansible, Linux, shell scripting, networking"
+    },
+    "cloud_architect": {
+        "title": "Cloud Architect",
+        "description": "Cloud architecture, AWS, Azure, GCP, infrastructure design, security, scalability, cost optimization, disaster recovery, high availability, networking, containerization, serverless, multi-cloud strategies"
+    },
+    "data_analyst": {
+        "title": "Data Analyst",
+        "description": "Data analysis, SQL, Excel, Python, R, data visualization, Tableau, Power BI, statistical analysis, reporting, dashboards, business intelligence, data cleaning, ETL, A/B testing, problem-solving"
+    },
+    "full_stack_developer": {
+        "title": "Full Stack Developer",
+        "description": "Frontend development, backend development, databases, JavaScript, Python, React, Node.js, REST APIs, SQL, Git, responsive design, web security, deployment, debugging, full software lifecycle"
+    }
+} 
